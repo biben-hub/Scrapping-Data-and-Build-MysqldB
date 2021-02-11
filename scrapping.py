@@ -1,4 +1,5 @@
-import webbrowser
+import requests
+from bs4 import BeautifulSoup
 
 nom_film         = []
 date_sortie_film = []
@@ -11,5 +12,9 @@ nationalité_film = []
 image_film       = []
 distributeur     = []
 
-url = "https://www.allocine.fr/films/"
-webbrowser.open_new_tab(url)
+url  = "https://www.allocine.fr/films/"
+page = requests.get(url)
+
+soup = BeautifulSoup(page.content, 'html.parser')
+# print(soup)
+results = soup.find_all(id="")
