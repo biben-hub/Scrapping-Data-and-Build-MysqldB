@@ -17,4 +17,6 @@ page = requests.get(url)
 
 soup = BeautifulSoup(page.content, 'html.parser')
 # print(soup)
-results = soup.find_all(id="")
+results = soup.find(class_='meta-title-link')
+# print(results)
+print(results.text)
