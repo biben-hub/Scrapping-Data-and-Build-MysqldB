@@ -16,7 +16,8 @@ url  = "https://www.allocine.fr/films/"
 page = requests.get(url)
 
 soup = BeautifulSoup(page.content, 'html.parser')
-# print(soup)
 results = soup.find(class_='meta-title-link')
-# print(results)
-print(results.text)
+elements = results.find_all_next('a', class_='meta-title-link')
+for e in elements:
+    print(e.text, end='\n')
+
