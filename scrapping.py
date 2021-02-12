@@ -21,7 +21,7 @@ page = requests.get(url)
 soup = BeautifulSoup(page.content, 'html.parser')
 results = soup.find(class_='meta-title-link')
 nom_elements  = results.find_all_next('a', class_='meta-title-link')
-# date_elements = results.find_all_next('a', class_='meta-title-link')
+date_elements = results.find_all_next('span', class_='date')
 # duree_elements = results.find_all_next('a', class_='meta-title-link')
 # categorie_elements = results.find_all_next('a', class_='meta-title-link')
 # realisateur_elements = results.find_all_next('a', class_='meta-title-link')
@@ -36,6 +36,10 @@ for e in nom_elements:
     nom_film.append(e.text)
 print(nom_film)
 
+for e in date_elements:
+    date_sortie_film.append(e.text)
+print(date_sortie_film)
+
 
 # try:
 my_db = mysql.connector.connect(host     = 'localhost',
@@ -43,7 +47,7 @@ my_db = mysql.connector.connect(host     = 'localhost',
                                 password = 'moi',
                                 database = 'films')
     
-print(my_db)
+# print(my_db)
 #     if my_db.is_connected():
 #         db_info = my_db.get_server_info()
 #         print("Connected to MySQL Server version ", db_info)
