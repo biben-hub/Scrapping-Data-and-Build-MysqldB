@@ -43,9 +43,11 @@ print(date_sortie_film)
 
 # try:
 my_db = mysql.connector.connect(host     = 'localhost',
-                                user     = 'moi',
-                                password = 'moi',
+                                user     = 'root2',
+                                password = 'rootroot',
                                 database = 'films')
+
+my_db.close()
     
 # print(my_db)
 #     if my_db.is_connected():
