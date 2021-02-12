@@ -45,19 +45,13 @@ print(date_sortie_film)
 my_db = mysql.connector.connect(host     = 'localhost',
                                 user     = 'root2',
                                 password = 'rootroot',
-                                database = 'films')
+                                database = 'films_db')
+
+cursor = my_db.cursor()
+
+# cursor.execute("CREATE TABLE test (name VARCHAR(20), address VARCHAR(255))")
+# cursor.execute("DROP TABLE test")
 
 my_db.close()
-    
-# print(my_db)
-#     if my_db.is_connected():
-#         db_info = my_db.get_server_info()
-#         print("Connected to MySQL Server version ", db_info)
-#         cursor = my_db.cursor()
 
-# except Error as e:
-#     print("Error while connecting to MySQL", e)
-# finally:
-#     if (my_db.is_connected()):
-#         my_db.close()
-#         print("MySQL connection is closed")
+
