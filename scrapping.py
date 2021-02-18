@@ -19,6 +19,7 @@ url  = "https://www.allocine.fr/films/"
 page = requests.get(url)
 
 soup = BeautifulSoup(page.content, 'html.parser')
+print(soup)
 results = soup.find(class_='meta-title-link')
 name_elements  = results.find_all_next('a', class_='meta-title-link')
 date_elements = results.find_all_next('span', class_='date')
@@ -46,6 +47,7 @@ cursor = my_db.cursor()
 
 # cursor.execute("CREATE DATABASE films_db")
 # cursor.execute("SHOW DATABASES")
+# cursor.execute("use {}".format(films_db))
 # cursor.execute("CREATE TABLE film_list (name_movie VARCHAR(255))")
 
 # query =  "ALTER TABLE film_list \ ADD name_movie VARCHAR(255) DEFAULT 'CS'"
@@ -55,7 +57,6 @@ cursor = my_db.cursor()
 insert_sql = """INSERT INTO film_list (name_movie) VALUES (%s)"""
 val = [list([item]) for item in name_movie]
 cursor.executemany(insert_sql, val)
-print("ok")
 my_db.commit()
 print("remains to insert", cursor.lastrowid)
 my_db.close()
