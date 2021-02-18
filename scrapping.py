@@ -4,25 +4,25 @@ import mysql.connector
 from mysql.connector import Error
 from mysql.connector import errorcode
 
-nom_film         = []
-date_sortie_film = []
-duree_film       = []
-categorie_film   = []
-realisateur_film = []
-acteurs_film     = []
-note_film        = []
-nationalite_film = []
-image_film       = []
-distributeur     = []
+name_movie         = []
+release_date_movie = []
+length_movie       = []
+category_film      = []
+realisateur_movie  = []
+actors_movie       = []
+rate_movie         = []
+language_movie     = []
+picture_movie      = []
+distribution_movie = []
 
 url  = "https://www.allocine.fr/films/"
 page = requests.get(url)
 
 soup = BeautifulSoup(page.content, 'html.parser')
 results = soup.find(class_='meta-title-link')
-nom_elements  = results.find_all_next('a', class_='meta-title-link')
+name_elements  = results.find_all_next('a', class_='meta-title-link')
 date_elements = results.find_all_next('span', class_='date')
-# duree_elements = results.find_all_next('a', class_='meta-title-link')
+# time_elements = results.find_all_next('a', class_='meta-title-link')
 # categorie_elements = results.find_all_next('a', class_='meta-title-link')
 # realisateur_elements = results.find_all_next('a', class_='meta-title-link')
 # acteurs_elements = results.find_all_next('a', class_='meta-title-link')
@@ -32,26 +32,32 @@ date_elements = results.find_all_next('span', class_='date')
 # distributeur_elements = results.find_all_next('a', class_='meta-title-link')
 
 
-for e in nom_elements:
-    nom_film.append(e.text)
-print(nom_film)
+for e in name_elements:
+    name_movie.append(e.text)
+print(name_movie)
 
 for e in date_elements:
-    date_sortie_film.append(e.text)
-print(date_sortie_film)
+    release_date_movie.append(e.text)
+print(release_date_movie)
 
 
-# try:
-my_db = mysql.connector.connect(host     = 'localhost',
-                                user     = 'root2',
-                                password = 'rootroot',
-                                database = 'films_db')
-
+my_db = mysql.connector.connect(host = 'localhost', user = 'root2', password = 'rootroot', database= 'films_db')
 cursor = my_db.cursor()
 
-# cursor.execute("CREATE TABLE test (name VARCHAR(20), address VARCHAR(255))")
-# cursor.execute("DROP TABLE test")
+# cursor.execute("CREATE DATABASE films_db")
+# cursor.execute("SHOW DATABASES")
+# cursor.execute("CREATE TABLE film_list (name_movie VARCHAR(255))")
 
+# query =  "ALTER TABLE film_list \ ADD name_movie VARCHAR(255) DEFAULT 'CS'"
+# cursor.execute(query)
+# # cursor.execute("DROP TABLE test")
+
+insert_sql = """INSERT INTO film_list (name_movie) VALUES (%s)"""
+val = [list([item]) for item in name_movie]
+cursor.executemany(insert_sql, val)
+print("ok")
+my_db.commit()
+print("remains to insert", cursor.lastrowid)
 my_db.close()
 
 
