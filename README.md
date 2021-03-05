@@ -4,7 +4,7 @@ Scrapping is a python project to scrapp the website "alloCiné" to get informati
 
 # Features
 
-**Find your best movies
+Markup **Find your best movies
 **Specific Web app for movie
 
 # Technologies
