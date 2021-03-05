@@ -4,6 +4,7 @@ import mysql.connector
 from mysql.connector import Error
 from mysql.connector import errorcode
 
+# declaring the data
 name_movie         = []
 release_date_movie = []
 length_movie       = []
@@ -15,12 +16,18 @@ language_movie     = []
 picture_movie      = []
 distribution_movie = []
 
+# Load the webpage content
 url  = "https://www.allocine.fr/films/"
 page = requests.get(url)
 
+# Convert to a beautiful soup object
 soup = BeautifulSoup(page.content, 'html.parser')
+print(soup.prettify())
+
 results = soup.find(class_='meta-title-link')
 print(results)
+
+
 name_elements  = results.find_all_next('a', class_='meta-title-link')
 date_elements = results.find_all_next('span', class_='date')
 # time_elements = results.find_all_next('a', class_='meta-title-link')
@@ -42,9 +49,7 @@ for e in date_elements:
 print(release_date_movie)
 
 
-my_db = mysql.connector.connect(host = 'localhost', 
-                                user = 'root2',
-                                password = 'rootroot')
+my_db = mysql.connector.connect(host = 'localhost', user = 'root2', password = 'rootroot')
 
 cursor = my_db.cursor()
 
@@ -58,8 +63,8 @@ for db in cursor:
     print(db)
 
 # cursor.execute("use {}".format(films_db))
-cursor.execute("CREATE TABLE film_list (id INT, name_movie VARCHAR(255))")
-print('created')
+# cursor.execute("CREATE TABLE film_list (id INT, name_movie VARCHAR(255))")
+# print('created')
 
 # query =  "ALTER TABLE film_list \ ADD name_movie VARCHAR(255) DEFAULT 'CS'"
 # cursor.execute(query)
