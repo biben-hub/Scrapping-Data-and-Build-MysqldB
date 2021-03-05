@@ -19,8 +19,8 @@ url  = "https://www.allocine.fr/films/"
 page = requests.get(url)
 
 soup = BeautifulSoup(page.content, 'html.parser')
-print(soup)
 results = soup.find(class_='meta-title-link')
+print(results)
 name_elements  = results.find_all_next('a', class_='meta-title-link')
 date_elements = results.find_all_next('span', class_='date')
 # time_elements = results.find_all_next('a', class_='meta-title-link')
@@ -42,23 +42,34 @@ for e in date_elements:
 print(release_date_movie)
 
 
-my_db = mysql.connector.connect(host = 'localhost', user = 'root2', password = 'rootroot', database= 'films_db')
+my_db = mysql.connector.connect(host = 'localhost', 
+                                user = 'root2',
+                                password = 'rootroot')
+
 cursor = my_db.cursor()
 
-# cursor.execute("CREATE DATABASE films_db")
-# cursor.execute("SHOW DATABASES")
+cursor.execute("DROP DATABASE IF EXISTS films_db")
+print('droped')
+
+cursor.execute("CREATE DATABASE films_db")
+cursor.execute("SHOW DATABASES")
+
+for db in cursor:
+    print(db)
+
 # cursor.execute("use {}".format(films_db))
-# cursor.execute("CREATE TABLE film_list (name_movie VARCHAR(255))")
+cursor.execute("CREATE TABLE film_list (id INT, name_movie VARCHAR(255))")
+print('created')
 
 # query =  "ALTER TABLE film_list \ ADD name_movie VARCHAR(255) DEFAULT 'CS'"
 # cursor.execute(query)
 # # cursor.execute("DROP TABLE test")
 
-insert_sql = """INSERT INTO film_list (name_movie) VALUES (%s)"""
-val = [list([item]) for item in name_movie]
-cursor.executemany(insert_sql, val)
-my_db.commit()
-print("remains to insert", cursor.lastrowid)
-my_db.close()
+# insert_sql = """INSERT INTO film_list (name_movie) VALUES (%s)"""
+# val = [list([item]) for item in name_movie]
+# cursor.executemany(insert_sql, val)
+# my_db.commit()
+# print("remains to insert", cursor.lastrowid)
+# my_db.close()
 
 
