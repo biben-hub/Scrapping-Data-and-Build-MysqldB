@@ -4,17 +4,14 @@ import mysql.connector
 from mysql.connector import Error
 from mysql.connector import errorcode
 
-# declaring the data
+# declaring variables to store the data we need
 name_movie         = []
 release_date_movie = []
 length_movie       = []
 category_film      = []
-realisateur_movie  = []
+productor_movie    = []
 actors_movie       = []
-rate_movie         = []
-language_movie     = []
 picture_movie      = []
-distribution_movie = []
 
 # Load the webpage content
 url  = "https://www.allocine.fr/films/"
@@ -22,45 +19,48 @@ page = requests.get(url)
 
 # Convert to a beautiful soup object
 soup = BeautifulSoup(page.content, 'html.parser')
-print(soup.prettify())
 
-results = soup.find(class_='meta-title-link')
-print(results)
+# find the section with the data 
+# section = soup.find('section', attrs = {'class', 'section section-wrap gd-3-cols gd-gap-20'})
+
+movies = soup.find('li', class_= 'mdl')
+
+name_elements = movies.find('h2', class_= 'meta-title').text.replace(' ', '')
+print(name_elements)
+
+date_time_cat_elements = movies.find('div', class_= 'meta-body-item meta-body-info').text.replace(' ', '').split()
+for e in date_time_cat_elements:
+    if e == '/':
+        date_time_cat_elements.remove(e)
+print(date_time_cat_elements)
+
+production_elements = movies.find('a', class_='blue-link').text
+print(production_elements)
+
+actors_elements = movies.find('div', class_='meta-body-item meta-body-actor').text.replace(' ', '').split()
+for e in actors_elements:
+    if e == 'Avec':
+        actors_elements.remove(e)
+print(actors_elements)
+
+picture_elements = movies.find
 
 
-name_elements  = results.find_all_next('a', class_='meta-title-link')
-date_elements = results.find_all_next('span', class_='date')
-# time_elements = results.find_all_next('a', class_='meta-title-link')
-# categorie_elements = results.find_all_next('a', class_='meta-title-link')
-# realisateur_elements = results.find_all_next('a', class_='meta-title-link')
-# acteurs_elements = results.find_all_next('a', class_='meta-title-link')
-# note_elements = results.find_all_next('a', class_='meta-title-link')
-# nationalite_elements = results.find_all_next('a', class_='meta-title-link')
-# image_elements = results.find_all_next('a', class_='meta-title-link')
-# distributeur_elements = results.find_all_next('a', class_='meta-title-link')
 
 
-for e in name_elements:
-    name_movie.append(e.text)
-print(name_movie)
 
-for e in date_elements:
-    release_date_movie.append(e.text)
-print(release_date_movie)
+# my_db = mysql.connector.connect(host = 'localhost', user = 'root2', password = 'rootroot')
 
+# cursor = my_db.cursor()
 
-my_db = mysql.connector.connect(host = 'localhost', user = 'root2', password = 'rootroot')
+# cursor.execute("DROP DATABASE IF EXISTS films_db")
+# print('droped')
 
-cursor = my_db.cursor()
+# cursor.execute("CREATE DATABASE films_db")
+# cursor.execute("SHOW DATABASES")
 
-cursor.execute("DROP DATABASE IF EXISTS films_db")
-print('droped')
-
-cursor.execute("CREATE DATABASE films_db")
-cursor.execute("SHOW DATABASES")
-
-for db in cursor:
-    print(db)
+# for db in cursor:
+#     print(db)
 
 # cursor.execute("use {}".format(films_db))
 # cursor.execute("CREATE TABLE film_list (id INT, name_movie VARCHAR(255))")
