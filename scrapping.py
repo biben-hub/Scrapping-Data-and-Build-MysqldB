@@ -21,34 +21,34 @@ page = requests.get(url)
 soup = BeautifulSoup(page.content, 'html.parser')
 
 # find the section with the data 
-# section = soup.find('section', attrs = {'class', 'section section-wrap gd-3-cols gd-gap-20'})
-
 movies = soup.find('li', class_= 'mdl')
 
+# fetching all data
 name_elements = movies.find('h2', class_= 'meta-title').text.replace(' ', '')
 print(name_elements)
 
-date_time_cat_elements = movies.find('div', class_= 'meta-body-item meta-body-info').text.replace(' ', '').split()
-for e in date_time_cat_elements:
+dtc_elements = movies.find('div', class_= 'meta-body-item meta-body-info').text.replace(' ', '').split()
+for e in dtc_elements:
     if e == '/':
-        date_time_cat_elements.remove(e)
-print(date_time_cat_elements)
+        dtc_elements.remove(e)
+print(dtc_elements)
 
-production_elements = movies.find('a', class_='blue-link').text
+production_elements = movies.find('a', class_= 'blue-link').text
 print(production_elements)
 
-actors_elements = movies.find('div', class_='meta-body-item meta-body-actor').text.replace(' ', '').split()
+actors_elements = movies.find('div', class_= 'meta-body-item meta-body-actor').text.replace(' ', '').split()
 for e in actors_elements:
     if e == 'Avec':
         actors_elements.remove(e)
 print(actors_elements)
 
-picture_elements = movies.find
+picture_elements = movies.find('img', class_= 'thumbnail-img')
+print(picture_elements["src"])
 
 
 
 
-
+#db Connection
 # my_db = mysql.connector.connect(host = 'localhost', user = 'root2', password = 'rootroot')
 
 # cursor = my_db.cursor()
