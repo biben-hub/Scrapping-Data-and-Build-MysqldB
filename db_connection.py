@@ -27,3 +27,31 @@ class Database_Connection:
                                                                             Actors VARCHAR(255), 
                                                                             Picture VARCHAR(500),;''')
 
+
+# my_db = mysql.connector.connect(host = 'localhost', user = 'root2', password = 'rootroot')
+
+# cursor = my_db.cursor()
+
+# cursor.execute("DROP DATABASE IF EXISTS films_db")
+# print('droped')
+
+# cursor.execute("CREATE DATABASE films_db")
+# cursor.execute("SHOW DATABASES")
+
+# for db in cursor:
+#     print(db)
+
+# cursor.execute("use {}".format(films_db))
+# cursor.execute("CREATE TABLE film_list (id INT, name_movie VARCHAR(255))")
+# print('created')
+
+# query =  "ALTER TABLE film_list \ ADD name_movie VARCHAR(255) DEFAULT 'CS'"
+# cursor.execute(query)
+# # cursor.execute("DROP TABLE test")
+
+# insert_sql = """INSERT INTO film_list (name_movie) VALUES (%s)"""
+# val = [list([item]) for item in name_movie]
+# cursor.executemany(insert_sql, val)
+# my_db.commit()
+# print("remains to insert", cursor.lastrowid)
+# my_db.close()
